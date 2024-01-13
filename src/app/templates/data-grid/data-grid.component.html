@@ -16,8 +16,6 @@
                 <span title="Double click to edit" (dblclick)="editing[rowIndex] = true" *ngIf="!editing[rowIndex]">
                     {{ value }}
                 </span>
-                <input autofocus (keypress)="updateValue($event,  rowIndex, 'ilid')" *ngIf="editing[rowIndex]"
-                    type="text" [value]="value" />
                 <select *ngIf="editing[rowIndex]" (blur)="editing[rowIndex] = false"
                     (keypress)="updateValue($event, rowIndex, 'ilid')" [value]="value">
                     @for (city of cities; track city) {
