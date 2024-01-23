@@ -16,32 +16,38 @@ import { DataGridComponent } from './templates/data-grid/data-grid.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+
+
   tableData: ITableData[] = PROVINCES;
   cities: ICities[] = CITIES;
   editing: any = {};
+  changedRowsObj!: any;
+
+  changedRows(changes: any) {
+    this.changedRowsObj = changes;
+  }
 
   tableColumns = [
     { prop: 'ilid', name: 'İl' },
     { prop: 'id', name: 'İlçe Kodu' },
     { prop: 'name', name: 'İlçe Adı' },
-    {
-      name: 'İşlemler',
-      width: 100,
-      cellTemplate: `
-        <button (click)="onEdit(row)" class="icon-button">
-          Düzenle
-        </button>
-        <button (click)="onSave(row)" class="icon-button">
-          Kaydet
-        </button>
-      `,
-    },
   ];
 
-  constructor(private locationService: LocationService) {}
+  constructor(private locationService: LocationService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.tableData = this.locationService.getProvinces();
     this.cities = this.locationService.getCities();
+    await this.locationService.fetchDataAndSaveToLocalStorage();
+
+    const storedData = localStorage.getItem('tableData');
+    if (storedData) {
+      this.tableData = JSON.parse(storedData);
+    }
+
+    // LocationService'den yeni veri geldiğinde güncelle
+    this.locationService.tableData$.subscribe((data) => {
+      this.tableData = data;
+    });
   }
 }

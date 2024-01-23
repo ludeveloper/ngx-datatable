@@ -1,9 +1,25 @@
-<p>
-  ana sayfa
-</p>
+<header>
+  USE CASE of NGX DATATABLE Lib
+</header>
 
-<app-data-grid class="material" [rows]="tableData" [columns]="tableColumns" [cities]="cities"></app-data-grid>
+<div *ngIf="changedRowsObj" class="changes">
+  <div class="title">
+    Changes:
+  </div>
+  @for (option of changedRowsObj; track option) {
+  <p class="row">
+    {{ option | json }}
+  </p>
 
+  }
+</div>
+
+<app-data-grid class="material" [rows]="tableData" [columns]="tableColumns" [cities]="cities"
+  (changedRowsEmitter)="changedRows($event)"></app-data-grid>
+
+<footer>
+  Developed by Lutfullah Ugurer
+</footer>
 
 <!---
   
@@ -12,10 +28,20 @@ grid-component
   grid template oluşturulması
   editable ayarları
 
+  satırda değişiklik yapıldığında yakala,
+  satırdan dışarı çıkıldığında değişikliği update geç.
+  update geçildiğinde satırdaki güncel kayıt localstorage'a kaydedilmek üzere gönderilir
+  
+  localstorage function:
+  localstorage'daki array içinde datada değişiklik var mı diye kontrol et
+  eğer kayıtta farklılık varsa 
+    localstorage'da 2 türlü kaydet.
+    1) sadece değişikliklerin tutulduğu bir array içine kaydet
+    2) ekrandaki tüm güncel datanın tutulduğu array içine kaydet
+
 app-component
   <grid-component> kullanımı
   rows=tableData gönderimi
   columns=columns gönderimi
-
 
 -->
