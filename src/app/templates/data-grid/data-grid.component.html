@@ -1,8 +1,8 @@
 <div>
-    <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="ColumnMode.force"
+    <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="10" [columnMode]="ColumnMode.force"
         [footerHeight]="50" rowHeight="auto" [rows]="rows">
 
-        <ngx-datatable-column name="ilid">
+        <ngx-datatable-column prop="ilid" [name]="columns[0].name">
 
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
                 <span *ngIf="!editing[rowIndex]" title="Double click to edit" (dblclick)="editing[rowIndex] = true">
@@ -24,7 +24,7 @@
 
             </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="id">
+        <ngx-datatable-column prop="id" [name]="columns[1].name">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
                 <span title="Double click to edit" (dblclick)="editing[rowIndex] = true" *ngIf="!editing[rowIndex]">
                     {{ value }}
@@ -33,7 +33,7 @@
                     (keypress)="onChange($event,  rowIndex, 'id')" />
             </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="name">
+        <ngx-datatable-column prop="name" [name]="columns[2].name">
 
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
                 <span title="Double click to edit" (dblclick)="editing[rowIndex] = true" *ngIf="!editing[rowIndex]">
@@ -43,5 +43,16 @@
                     (keypress)="onChange($event,  rowIndex, 'name')" />
             </ng-template>
         </ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Action">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+
+                <button (click)="editing[rowIndex] = true" class="icon-button">
+                    Düzenle
+                </button>
+                <button (click)="onChange($event, rowIndex, row)" class="icon-button">
+                    Kaydet
+                </button>
+            </ng-template>
+        </ngx-datatable-column> -->
     </ngx-datatable>
 </div>
