@@ -39,3 +39,10 @@ footer {
     border-bottom: 1px dotted gray;
   }
 }
+
+.ngx-datatable.material
+  .datatable-body
+  .datatable-body-row
+  .datatable-body-cell {
+  align-self: baseline;
+}
