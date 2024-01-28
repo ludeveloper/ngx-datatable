@@ -1,6 +1,6 @@
 <div>
     <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="10" [columnMode]="ColumnMode.force"
-        [footerHeight]="50" rowHeight="auto" [rows]="rows">
+        [footerHeight]="50" rowHeight="auto" [rows]="rows" (blur)="onChangeRow($event)">
 
         <ngx-datatable-column prop="ilid" [name]="columns[0].name">
 
@@ -10,8 +10,7 @@
                 </span>
 
                 <mat-form-field *ngIf="editing[rowIndex]">
-                    <mat-label>Şehir seçiniz...</mat-label>
-                    <mat-select [value]="value" (selectionChange)="updateCell($event, rowIndex, 'ilid')"
+                    <mat-select [value]="value" (valueChange)="updateCell($event, rowIndex, 'ilid')"
                         (keypress)="editing[rowIndex] = false">
                         <mat-option></mat-option>
                         @for (option of cities; track option) {
@@ -19,9 +18,6 @@
                         }
                     </mat-select>
                 </mat-form-field>
-
-
-
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column prop="id" [name]="columns[1].name">
@@ -30,7 +26,7 @@
                     {{ value }}
                 </span>
                 <input *ngIf="editing[rowIndex]" autofocus type="text" [value]="value"
-                    (keypress)="onChange($event,  rowIndex, 'id')" />
+                    (change)="onChange($event,  rowIndex, 'id')" />
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column prop="name" [name]="columns[2].name">
@@ -40,19 +36,23 @@
                     {{ value }}
                 </span>
                 <input *ngIf="editing[rowIndex]" autofocus type="text" [value]="value"
-                    (keypress)="onChange($event,  rowIndex, 'name')" />
+                    (change)="onChange($event,  rowIndex, 'name')" />
             </ng-template>
         </ngx-datatable-column>
-       <!--  <ngx-datatable-column name="Action">
+        <ngx-datatable-column name="Action">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
 
-                <button (click)="editing[rowIndex] = true" class="icon-button">
-                    Düzenle
+                <button mat-icon-button *ngIf="!editing[rowIndex]" color="primary" class="icon-button"
+                    aria-label="Düzenle" (click)="editing[rowIndex] = true">
+                    <mat-icon>edit</mat-icon>
                 </button>
-                <button (click)="onChange($event, rowIndex, row)" class="icon-button">
-                    Kaydet
+
+                <button mat-icon-button *ngIf="editing[rowIndex]" color="primary" class="icon-button" aria-label="Kaydet"
+                    (click)="onChange($event, rowIndex, row)">
+                    <mat-icon>save</mat-icon>
                 </button>
+
             </ng-template>
-        </ngx-datatable-column> -->
+        </ngx-datatable-column>
     </ngx-datatable>
 </div>
